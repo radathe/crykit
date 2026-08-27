@@ -1,11 +1,7 @@
-addlibrary (ciphers SHARED
+add_library(hill SHARED
     hill.cpp
 )
 
-target_link_libraries(ciphers PRIVATE
-    utils
-)
-
-target_include_directories(ciphers PUBLIC
+target_include_directories(hill PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
