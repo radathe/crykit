@@ -1,4 +1,5 @@
-
+#include <cstddef>
+#include <cstdint>
 
 struct ConstBuffer {
     const uint8_t* data;

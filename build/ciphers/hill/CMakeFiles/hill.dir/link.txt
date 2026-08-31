@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,--dependency-file=CMakeFiles/hill.dir/link.d -Wl,-soname,libhill.so -o ../../bin/libhill.so CMakeFiles/hill.dir/hill.cpp.o

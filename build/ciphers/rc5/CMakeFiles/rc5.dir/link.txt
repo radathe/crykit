@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,--dependency-file=CMakeFiles/rc5.dir/link.d -Wl,-soname,librc5.so -o ../../bin/librc5.so CMakeFiles/rc5.dir/rc5.cpp.o
