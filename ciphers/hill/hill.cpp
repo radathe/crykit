@@ -5,12 +5,14 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdint>
+#include <cstring>
 #include <iterator>
 #include <random>
+#include <vector>
 
 namespace  cipher::hill {
 
-    const size_t N = 8;
+    const size_t N = 8; //N - сторона матрицы и размер блока текста, N*N - размер ключа
     const AlgorithmInfo hill_info = {
         "hill",
         N*N,
@@ -49,7 +51,7 @@ namespace  cipher::hill {
         }
         return m;
     }
-    Matrix<GF28> block_to_matrix(uint8_t* data,
+    Matrix<GF28> block_to_matrix(const uint8_t* data,
         size_t offset){
             Matrix<GF28> m(N, 1);
             for (size_t i=0; i<N; i++){
@@ -57,7 +59,11 @@ namespace  cipher::hill {
             }
             return m;
     }
-    uint8_t matrix_to_block(Matrix<GF28>){}
+    void matrix_to_block(Matrix<GF28>& m, uint8_t* result){
+        for (size_t i = 0; i<N; ++i){
+            result[i] = m.at(i, 0).value();
+        }
+    }
     Matrix<GF28> encrypt_block(const Matrix<GF28> &key, const Matrix<GF28> &block){
         return key*block;
     }
@@ -65,7 +71,30 @@ namespace  cipher::hill {
         ConstBuffer input,
         MutBuffer* output){
             Matrix<GF28> matrix_key = keyget(key);
+            ConstBuffer padded = utils::do_padding(input);
+            for (size_t offset = 0; offset<input.size; offset+=N){
+                Matrix<GF28> matrix_block = block_to_matrix(input.data, offset);
+                Matrix<GF28> encrypted_block = encrypt_block(matrix_key, matrix_block);
+                uint8_t result_block[N] {0};
+                matrix_to_block(encrypted_block, result_block);
+                std::memcpy(output->data+offset, result_block, N);
+            }
+            return 0;
+    }
 
+    extern "C" int decrypt(ConstBuffer key,
+        ConstBuffer input,
+        MutBuffer* output){
+            Matrix<GF28> matrix_key = keyget(key);
+            Matrix<GF28> inversed_key = matrix_key.inv();
+            for (size_t offset = 0; offset<input.size; offset+=N){
+                Matrix<GF28> matrix_block = block_to_matrix(input.data, offset);
+                Matrix<GF28> decrypted_block = encrypt_block(inversed_key, matrix_block);
+                uint8_t result_block[N] {0};
+                matrix_to_block(decrypted_block, result_block);
+                std::memcpy(output->data+offset, result_block, N);
+            }
+            return 0;
     }
 
     extern "C" const AlgorithmInfo* get_algorithm_info(){
