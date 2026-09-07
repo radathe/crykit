@@ -1,8 +1,14 @@
 #pragma once
+#include <cstddef>
 #include <cstdint>
 #include <vector>
 #include <stdexcept>
+#include "crykit.hpp"
 
+namespace utils{
+    ConstBuffer do_padding(ConstBuffer input, size_t block_size);
+    MutBuffer undo_padding(ConstBuffer input);
+}
 
 struct GF28 {
     uint8_t v;
