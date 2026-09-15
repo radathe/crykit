@@ -5,9 +5,9 @@
 #include <stdexcept>
 #include "crykit.hpp"
 
-namespace utils{
-    ConstBuffer do_padding(ConstBuffer input, size_t block_size);
-    MutBuffer undo_padding(ConstBuffer input);
+namespace utils {
+    int do_padding(ConstBuffer input, size_t block_size, MutBuffer* output);
+    int undo_padding(MutBuffer* output, size_t block_size);
 }
 
 struct GF28 {
