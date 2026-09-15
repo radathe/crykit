@@ -1,1 +1,0 @@
-/usr/bin/c++ -O3 -DNDEBUG -Wl,--dependency-file=CMakeFiles/crykit.dir/link.d CMakeFiles/crykit.dir/cli/main.cpp.o -o bin/crykit  -lcrykit_utils -ldl

@@ -1,1 +1,0 @@
-/usr/bin/c++ -fPIC -O3 -DNDEBUG -shared -Wl,--dependency-file=CMakeFiles/tea.dir/link.d -Wl,-soname,libtea.so -o ../../bin/libtea.so CMakeFiles/tea.dir/tea.cpp.o
