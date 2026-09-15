@@ -71,9 +71,10 @@ namespace  cipher::hill {
         ConstBuffer input,
         MutBuffer* output){
             Matrix<GF28> matrix_key = keyget(key);
-            ConstBuffer padded = utils::do_padding(input, N);
-            for (size_t offset = 0; offset<padded.size; offset+=N){
-                Matrix<GF28> matrix_block = block_to_matrix(padded.data, offset);
+            int status = utils::do_padding(input, N, output);
+            if (status != CRYKIT_OK) return status;
+            for (size_t offset = 0; offset<output->size; offset+=N){
+                Matrix<GF28> matrix_block = block_to_matrix(output->data, offset);
                 Matrix<GF28> encrypted_block = encrypt_block(matrix_key, matrix_block);
                 uint8_t result_block[N] {0};
                 matrix_to_block(encrypted_block, result_block);
@@ -94,8 +95,7 @@ namespace  cipher::hill {
                 matrix_to_block(decrypted_block, result_block);
                 std::memcpy(output->data+offset, result_block, N);
             }
-            output = utils::undo_padding(output);
-            return 0;
+            return utils::undo_padding(output, N);
     }
 
     extern "C" const AlgorithmInfo* get_algorithm_info(){
