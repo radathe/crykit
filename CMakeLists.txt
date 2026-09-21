@@ -4,18 +4,18 @@ project(crykit LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
+enable_testing()
+
 
 
 if(NOT CMAKE_BUILD_TYPE)
     set(CMAKE_BUILD_TYPE Release)
 endif()
 
-# Повышенный уровень предупреждений, как рекомендует ТЗ.
 add_compile_options(-Wall -Wextra)
 
 include_directories(${PROJECT_SOURCE_DIR}/include)
 
-#Бинарник и разделяемые библиотеки складываются в один каталог
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
@@ -26,3 +26,5 @@ add_subdirectory(ciphers/rc5)
 add_subdirectory(ciphers/tea)
 
 add_subdirectory(cli)
+
+add_subdirectory(tests)
