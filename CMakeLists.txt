@@ -1,7 +1,11 @@
 cmake_minimum_required(VERSION 3.10)
-project(crykit CXX)
+project(crykit LANGUAGES CXX)
 
 set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+enable_testing()
+
 
 enable_testing()
 
@@ -17,6 +21,7 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 
 add_subdirectory(lib)
+
 add_subdirectory(ciphers/hill)
 add_subdirectory(ciphers/rc5)
 add_subdirectory(ciphers/tea)
@@ -28,5 +33,7 @@ target_link_libraries(crykit PRIVATE utils)
 if(UNIX)
     target_link_libraries(crykit PRIVATE ${CMAKE_DL_LIBS})
 endif()
+
+add_subdirectory(cli)
 
 add_subdirectory(tests)
