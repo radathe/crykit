@@ -6,6 +6,34 @@
 #include "crykit.hpp"
 
 
+uint8_t GF28::gf_mul(uint8_t a, uint8_t b) {
+    uint8_t result = 0;
+    for (int i = 0; i < 8; ++i) {
+        if (b & 1) {
+            result ^= a;
+        }
+        const uint8_t carry = a & 0x80;
+        a = static_cast<uint8_t>(a << 1);
+        if (carry) {
+            a ^= 0x1B;
+        }
+        b = static_cast<uint8_t>(b >> 1);
+    }
+    return result;
+}
+
+GF28 GF28::inv() {
+    if (v == 0) {
+        throw std::runtime_error("GF28: zero has no inverse");
+    }
+    uint8_t result = 1;
+    for (int i = 0; i < 254; ++i) {
+        result = gf_mul(result, v);
+    }
+    return GF28(result);
+}
+
+
 namespace utils {
 
 
