@@ -4,3 +4,5 @@ add_library(utils STATIC
 target_include_directories(utils PUBLIC
     ${PROJECT_SOURCE_DIR}/include
 )
+
+set_target_properties(utils PROPERTIES POSITION_INDEPENDENT_CODE ON)

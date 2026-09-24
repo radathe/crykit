@@ -3,20 +3,18 @@
 #include <cstddef>
 #include <cstdint>
 
-
 enum CrykitOperation : int {
     CRYKIT_OP_ENCRYPT = 0,
     CRYKIT_OP_DECRYPT = 1,
 };
 
-//коды возврата: успех - 0, любая ошибка - отрицательное число
 enum CrykitStatus : int {
     CRYKIT_OK = 0,
-    CRYKIT_ERR_KEY = -1,      //неверный размер или формат ключа
-    CRYKIT_ERR_INPUT = -2,    //некорректные входные данные
-    CRYKIT_ERR_PADDING = -3,  //некорректный или отсутствующий PKCS#7 padding
-    CRYKIT_ERR_OUTPUT = -4,   // выходной буфер слишком мал
-    CRYKIT_ERR_INTERNAL = -5, // прочие внутренние ошибки
+    CRYKIT_ERR_KEY = -1,
+    CRYKIT_ERR_INPUT = -2,
+    CRYKIT_ERR_PADDING = -3,
+    CRYKIT_ERR_OUTPUT = -4,
+    CRYKIT_ERR_INTERNAL = -5,
 };
 
 struct ConstBuffer {
