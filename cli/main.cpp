@@ -62,8 +62,7 @@ static void print_usage(const char* program) {
         << "\n"
         << "Примеры:\n"
         << "  " << program << " -a hill -g -o key.bin\n"
-        << "  " << program << " -a hill -e -k key.bin -i in.bin -o out.bin\n"
-        << "  " << program << " -a hill -d -k key.bin < out.bin > plain.bin\n";
+        << "  " << program << " -a hill -e -k key.bin -i in.bin -o out.bin\n";
 }
 
 static void print_algorithms() {
